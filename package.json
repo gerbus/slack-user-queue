@@ -1,0 +1,30 @@
+{
+  "name": "slack-user-stack",
+  "description": "Maintain stacks of users in Slack",
+  "version": "0.1.0",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": {
+    "email": "christopher.x.gerber@gmail.com",
+    "name": "Christopher X Gerber",
+    "url": "http://gerbus.ca"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7"
+  },
+  "keywords": [
+    "slack",
+    "slack-bot",
+    "bot"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": "12.13.0"
+  }
+}
