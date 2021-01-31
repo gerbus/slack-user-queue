@@ -4,16 +4,9 @@
 require('dotenv').config()
 const express = require('express');
 const app = express();
-const bodyParser= require('body-parser');
-const { Pool } = require('pg');
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  // ssl: {
-  //   rejectUnauthorized: false
-  // }
-  ssl: false
-});
-
+const bodyParser = require('body-parser');
+const data = require('./data')
+data.init()
 const PORT = process.env.PORT || 3000;
 
 const CREATE = "create"
@@ -53,7 +46,8 @@ app.post('/commands/queue', async (req, res, next) => {
   // grab a list of all queues
   let db, queues
   try {
-    db = await pool.connect()
+    db = await data.openConnection()
+    res.locals.dataConnection = db
     try {
       queues = await db.query('SELECT * FROM queues')
     } catch (err) {
@@ -164,4 +158,18 @@ app.post('/commands/queue', async (req, res, next) => {
     text: responseText
   });
   return next()
+})
+
+// Release data pool connection after route processing
+app.use((err, req, res, next) => {
+  if (res.locals.dataConnection) {
+    data.releaseConnection(res.locals.dataConnection);
+  }
+  next(err)
+})
+app.use((req, res, next) => {
+  if (res.locals.dataConnection) {
+    data.releaseConnection(res.locals.dataConnection);
+  }
+  next();
 })
