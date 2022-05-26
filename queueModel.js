@@ -22,5 +22,11 @@ exports.resetQueue = async (id) => {
 exports.getQueueUsers = async (id) => {
   return conn.query(`SELECT * FROM queue_users qu LEFT JOIN users u ON u.user_id = qu.user_id WHERE qu.queue_id = ${id} ORDER BY rank`)
 }
-exports.sendUserBackOfQueue = async () => {}
-exports.sendUserFrontOfQueue = async () => {}
+exports.sendUsersBackOfQueue = async (queueId, userId) => {
+  //BEGIN
+  //queueUsersEndRank = queueUsers.rows[queueUsers.rows.length - 1].rank
+
+  //conn.query(`UPDATE `)
+  //COMMIT
+}
+exports.sendUsersFrontOfQueue = async () => {}
